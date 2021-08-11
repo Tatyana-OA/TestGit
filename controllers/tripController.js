@@ -46,9 +46,30 @@ router.post('/create', isUser(), async (req,res) => {
 })
 router.get('/shared', async (req,res)=> {
 	const trips = await req.storage.getAllTrips();
-    res.render('home')
     res.render('trip/shared', {trips})
 })
+
+router.get('/details/:id', async (req,res) => {
+    try {
+        const trip = await req.storage.getTripById(req.params.id)
+        console.log(trip)
+        console.log(req.user)
+        // trip.hasUser = Boolean(req.user)
+        // // attach variables to trip -> if there is a user and this user is the trip's author
+        // trip.isAuthor = req.user && req.user._id == trip.author
+        // // if the populated usersLiked includes the current user (so they cant like it again)
+        // trip.liked = req.user && trip.usersLiked.find(u => u._id == req.user._id)
+
+        res.render('trip/details', {trip})
+    }
+    catch(err) {
+        console.log(err.message)
+        res.redirect('/404')
+    }
+
+   
+})
+
 
 
 module.exports = router;
