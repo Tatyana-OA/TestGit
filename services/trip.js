@@ -11,16 +11,16 @@ async function createTrip(tripData) {
 	return trip; // to use in middleware or elsewhere in app
 }
 async function getAllTrips() {
-	const trips = await trip.find({}).lean()
+	const trips = await Trip.find({}).lean()
 	return trips;
 }
 async function getTripById (id) {
-	const trips = await trip.findById(id).lean()
+	const trips = await Trip.findById(id).lean()
 	return trips;
 }
 
 async function editTrip (id, tripData) {
-	const trip = await trip.findById(id)
+	const trip = await Trip.findById(id)
 	trip.startPoint = tripData.startPoint
 	trip.endPoint = tripData.endPoint
 	trip.date = tripData.date
@@ -31,7 +31,7 @@ async function editTrip (id, tripData) {
 	trip.seats = Number(tripData.seats)
 	trip.imageUrl = tripData.imageUrl
 
-	return trip.save()
+	return Trip.save()
 
 }
 // async function bookTrip(TripId,userId) {

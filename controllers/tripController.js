@@ -44,6 +44,11 @@ router.post('/create', isUser(), async (req,res) => {
         res.render('trip/create',ctx)
     }
 })
+router.get('/shared', async (req,res)=> {
+	const trips = await req.storage.getAllTrips();
+    res.render('home')
+    res.render('trip/shared', {trips})
+})
 
 
 module.exports = router;
