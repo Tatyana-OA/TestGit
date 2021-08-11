@@ -40,9 +40,11 @@
 
                         <!-- if there are no logged in user do not show div with class actions  -->
                         <div class="actions">
+							{{#if trip.isAuthor}}
                             <!-- Only for logged user and creator to this trip -->
-                            <a href="" class="btn btn-danger">Delete this trip</a>
-                            <a href="" class="btn btn-warning">Edit this trip</a>
+                            <a href="/trip/delete/{{trip._id}}" class="btn btn-danger">Delete this trip</a>
+                            <a href="/trip/edit/{{trip._id}}" class="btn btn-warning">Edit this trip</a>
+							{{/if}}
 
                             <!-- logged in user with available seats -->
                             <a href="" class="btn btn-join">Join now, [ 1 ] seats left!</a>

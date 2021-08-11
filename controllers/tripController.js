@@ -56,7 +56,7 @@ router.get('/details/:id', async (req,res) => {
         console.log(req.user)
         // trip.hasUser = Boolean(req.user)
         // // attach variables to trip -> if there is a user and this user is the trip's author
-        // trip.isAuthor = req.user && req.user._id == trip.author
+         trip.isAuthor = req.user && req.user._id == trip.creator
         // // if the populated usersLiked includes the current user (so they cant like it again)
         // trip.liked = req.user && trip.usersLiked.find(u => u._id == req.user._id)
 
