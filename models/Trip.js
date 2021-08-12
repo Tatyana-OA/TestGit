@@ -11,7 +11,7 @@ const schema = new Schema({
 	seats: {type:Number, required:true},
 	price: {type:Number, required:true},
 	description: {type:String, required:true},
-	creator: {type:String, required:true}, // will take the id from the current user
+	creator:[{type:Schema.Types.ObjectId, ref: 'User', default: []}], // will take the id from the current user
 	buddies:  [{type:Schema.Types.ObjectId, ref: 'User', default: []}],
 
 })
