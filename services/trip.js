@@ -15,7 +15,7 @@ async function getAllTrips() {
 	return trips;
 }
 async function getTripById (id) {
-	const trips = await Trip.findById(id).lean()
+	const trips = await Trip.findById(id).populate('creator').populate('buddies').lean()
 	return trips;
 }
 
@@ -31,24 +31,28 @@ async function editTrip (id, tripData) {
 	trip.seats = Number(tripData.seats)
 	trip.imageUrl = tripData.imageUrl
 
-	return Trip.save()
+	return trip.save()
 
 }
-// async function bookTrip(TripId,userId) {
+async function deleteTrip(id) {
+    return  Trip.findByIdAndDelete(id);
+}
+async function bookTrip(tripId,userId) {
 
-// 	//calling info from both models
-// 	const Trip = await Trip.findById(TripId)
-// 	const user = await User.findById(userId)
+	//calling info from both models
+	const trip = await Trip.findById(tripId)
+	const user = await User.findById(userId)
+	console.log('THE TRIP', trip)
+	if (user._id == trip.creator[0]) {
+		throw new Error('Cannot book your own Trip!')
+	}
+	user.tripsHistory.push(trip)
+	trip.buddies.push(user)
+	trip.seats--;
+//to save info in both models
+	return Promise.all([user.save(), trip.save()]);
 
-// 	if (user._id == Trip.owner) {
-// 		throw new Error('Cannot book your own Trip!')
-// 	}
-// 	user.bookedTrips.push(Trip)
-// 	Trip.bookedBy.push(user)
-// //to save info in both models
-// 	return Promise.all([user.save(), Trip.save()]);
-
-// }
+}
 
 
 //TODO add other functions that find a user
@@ -58,5 +62,7 @@ module.exports = {
    getTripById,
    createTrip,
    editTrip,
+   deleteTrip,
+   bookTrip
   // bookTrip
 }

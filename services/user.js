@@ -33,5 +33,5 @@ async function getUserByEmail (email) {
 
 module.exports = {
     createUser,
-    getUserByEmail
+    getUserByEmail,
 }
